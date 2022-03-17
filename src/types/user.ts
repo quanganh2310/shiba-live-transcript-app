@@ -1,4 +1,4 @@
 export interface IAuthUser {
-  accessToken: string;
-  // isLoggedIn?: boolean;
+  email: string;
+  token: string;
 }

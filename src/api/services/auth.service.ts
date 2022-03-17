@@ -1,30 +1,34 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = 'https://reqres.in/api/';
 
-class AuthService {
-  async login(username: string, password: string): Promise<any> {
-    const response = await axios.post(API_URL + 'signin', {
-      username,
-      password,
-    });
-    if (response.data.accessToken) {
-      localStorage.setItem('user', JSON.stringify(response.data));
-    }
-    return response.data;
+const register = async (email: string, password: string) => {
+  const response = await axios.post(API_URL + 'register', {
+    email,
+    password,
+  });
+  return response.data;
+};
+
+const login = async (email: string, password: string) => {
+  const response = await axios.post(API_URL + 'login', {
+    email,
+    password,
+  });
+  if (response.data.token) {
+    localStorage.setItem('user', JSON.stringify({ email, token: response.data.token }));
   }
+  return { email, token: response.data.token };
+};
 
-  logout(): void {
-    localStorage.removeItem('user');
-  }
+const logout = (): void => {
+  localStorage.removeItem('user');
+};
 
-  register(username: string, email: string, password: string): Promise<any> {
-    return axios.post(API_URL + 'signup', {
-      username,
-      email,
-      password,
-    });
-  }
-}
+const authService = {
+  register,
+  login,
+  logout,
+};
 
-export default new AuthService();
+export default authService;
