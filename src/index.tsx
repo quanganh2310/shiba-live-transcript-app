@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import BasicLayout from './components/Layout/BasicLayout';
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <BasicLayout>
+      <App />
+    </BasicLayout>
+  </Provider>,
+  // </React.StrictMode>
   document.getElementById('root')
 );
 
